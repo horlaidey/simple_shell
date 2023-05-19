@@ -113,7 +113,7 @@ int is_executable(data_shell *datash)
 	{
 		return (i);
 	}
-	get_error(datash, 127);
+	get_err(datash, 127);
 	return (-1);
 }
 
@@ -128,7 +128,7 @@ int check_error_cmd(char *dir, data_shell *datash)
 {
 	if (dir == NULL)
 	{
-		get_error(datash, 127);
+		get_err(datash, 127);
 		return (1);
 	}
 
@@ -136,7 +136,7 @@ int check_error_cmd(char *dir, data_shell *datash)
 	{
 		if (access(dir, X_OK) == -1)
 		{
-			get_error(datash, 126);
+			get_err(datash, 126);
 			free(dir);
 			return (1);
 		}
@@ -146,7 +146,7 @@ int check_error_cmd(char *dir, data_shell *datash)
 	{
 		if (access(datash->args[0], X_OK) == -1)
 		{
-			get_error(datash, 126);
+			get_err(datash, 126);
 			return (1);
 		}
 	}
@@ -174,7 +174,7 @@ int cmd_exec(data_shell *datash)
 		return (1);
 	if (exec == 0)
 	{
-		dir = _which(datash->args[0], datash->_environ);
+		dir = _which(datash->args[0], datash->_env);
 		if (check_error_cmd(dir, datash) == 1)
 			return (1);
 	}
@@ -183,14 +183,14 @@ int cmd_exec(data_shell *datash)
 	if (pd == 0)
 	{
 		if (exec == 0)
-			dir = _which(datash->args[0], datash->_environ);
+			dir = _which(datash->args[0], datash->_env);
 		else
 			dir = datash->args[0];
-		execve(dir + exec, datash->args, datash->_environ);
+		execve(dir + exec, datash->args, datash->_env);
 	}
 	else if (pd < 0)
 	{
-		perror(datash->av[0]);
+		perror(datash->argv[0]);
 		return (1);
 	}
 	else

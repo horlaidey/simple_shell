@@ -9,7 +9,7 @@
 char *without_comment(char *input)
 {
 	int i, up_to;
-	
+
 	up_to = 0;
 	for (i = 0; input[i]; i++)
 	{

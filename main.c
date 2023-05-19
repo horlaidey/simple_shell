@@ -8,6 +8,7 @@
 void free_data(data_shell *datash)
 {
 	unsigned int i;
+
 	for (i = 0; datash->_env[i]; i++)
 	{
 		free(datash->_env[i]);
@@ -26,6 +27,7 @@ void free_data(data_shell *datash)
 void set_data(data_shell *datash, char **argv)
 {
 	unsigned int i;
+
 	datash->argv = argv;
 	datash->input = NULL;
 	datash->args = NULL;

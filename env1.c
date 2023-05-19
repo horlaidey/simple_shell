@@ -66,13 +66,13 @@ int _env(data_shell *datash)
 {
 	int i, j;
 
-	for (i = 0; datash->_environ[i]; i++)
+	for (i = 0; datash->_env[i]; i++)
 	{
 
-		for (j = 0; datash->_environ[i][j]; j++)
+		for (j = 0; datash->_env[i][j]; j++)
 			;
 
-		write(STDOUT_FILENO, datash->_environ[i], j);
+		write(STDOUT_FILENO, datash->_env[i], j);
 		write(STDOUT_FILENO, "\n", 1);
 	}
 	datash->status = 0;
