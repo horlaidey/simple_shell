@@ -5,20 +5,20 @@
  *
  * @datash: data relevant (directory)
  * @msg: message to print
- * @error: output message
+ * @err: output error message
  * @ver_str: counter lines
  * Return: error message
  */
-char *strcat_cd(data_shell *datash, char *msg, char *error, char *ver_str)
+char *strcat_cd(data_shell *datash, char *msg, char *err, char *ver_str)
 {
 	char *illegal_flag;
 
-	_strcpy(error, datash->av[0]);
-	_strcat(error, ": ");
-	_strcat(error, ver_str);
-	_strcat(error, ": ");
-	_strcat(error, datash->args[0]);
-	_strcat(error, msg);
+	_strcpy(err, datash->argv[0]);
+	_strcat(err, ": ");
+	_strcat(err, ver_str);
+	_strcat(err, ": ");
+	_strcat(err, datash->args[0]);
+	_strcat(err, msg);
 	if (datash->args[1][0] == '-')
 	{
 		illegal_flag = malloc(3);
@@ -30,12 +30,12 @@ char *strcat_cd(data_shell *datash, char *msg, char *error, char *ver_str)
 	}
 	else
 	{
-		_strcat(error, datash->args[1]);
+		_strcat(err, datash->args[1]);
 	}
 
-	_strcat(error, "\n");
-	_strcat(error, "\0");
-	return (error);
+	_strcat(err, "\n");
+	_strcat(err, "\0");
+	return (err);
 }
 
 /**
@@ -45,8 +45,8 @@ char *strcat_cd(data_shell *datash, char *msg, char *error, char *ver_str)
  */
 char *error_get_cd(data_shell *datash)
 {
-	int length, len_id;
-	char *error, *ver_str, *msg;
+	int len, len_id;
+	char *err, *ver_str, *msg;
 
 	ver_str = aux_itoa(datash->counter);
 	if (datash->args[1][0] == '-')
@@ -60,21 +60,21 @@ char *error_get_cd(data_shell *datash)
 		len_id = _strlen(datash->args[1]);
 	}
 
-	length = _strlen(datash->av[0]) + _strlen(datash->args[0]);
-	length += _strlen(ver_str) + _strlen(msg) + len_id + 5;
-	error = malloc(sizeof(char) * (length + 1));
+	len = _strlen(datash->argv[0]) + _strlen(datash->args[0]);
+	len += _strlen(ver_str) + _strlen(msg) + len_id + 5;
+	err = malloc(sizeof(char) * (len + 1));
 
-	if (error == 0)
+	if (err == 0)
 	{
 		free(ver_str);
 		return (NULL);
 	}
 
-	error = strcat_cd(datash, msg, error, ver_str);
+	err = strcat_cd(datash, msg, err, ver_str);
 
 	free(ver_str);
 
-	return (error);
+	return (err);
 }
 
 /**
@@ -84,29 +84,29 @@ char *error_get_cd(data_shell *datash)
  */
 char *error_not_found(data_shell *datash)
 {
-	int length;
-	char *error;
+	int len;
+	char *err;
 	char *ver_str;
 
 	ver_str = aux_itoa(datash->counter);
-	length = _strlen(datash->av[0]) + _strlen(ver_str);
-	length += _strlen(datash->args[0]) + 16;
-	error = malloc(sizeof(char) * (length + 1));
-	if (error == 0)
+	len = _strlen(datash->argv[0]) + _strlen(ver_str);
+	len += _strlen(datash->args[0]) + 16;
+	err = malloc(sizeof(char) * (len + 1));
+	if (err == 0)
 	{
-		free(error);
+		free(err);
 		free(ver_str);
 		return (NULL);
 	}
-	_strcpy(error, datash->av[0]);
-	_strcat(error, ": ");
-	_strcat(error, ver_str);
-	_strcat(error, ": ");
-	_strcat(error, datash->args[0]);
-	_strcat(error, ": not found\n");
-	_strcat(error, "\0");
+	_strcpy(err, datash->argv[0]);
+	_strcat(err, ": ");
+	_strcat(err, ver_str);
+	_strcat(err, ": ");
+	_strcat(err, datash->args[0]);
+	_strcat(err, ": not found\n");
+	_strcat(err, "\0");
 	free(ver_str);
-	return (error);
+	return (err);
 }
 
 /**
@@ -117,29 +117,28 @@ char *error_not_found(data_shell *datash)
  */
 char *error_exit_shell(data_shell *datash)
 {
-	int length;
-	char *error;
+	int len;
+	char *err;
 	char *ver_str;
 
 	ver_str = aux_itoa(datash->counter);
-	length = _strlen(datash->av[0]) + _strlen(ver_str);
-	length += _strlen(datash->args[0]) + _strlen(datash->args[1]) + 23;
-	error = malloc(sizeof(char) * (length + 1));
-	if (error == 0)
+	len = _strlen(datash->argv[0]) + _strlen(ver_str);
+	len += _strlen(datash->args[0]) + _strlen(datash->args[1]) + 23;
+	err = malloc(sizeof(char) * (len + 1));
+	if (err == 0)
 	{
 		free(ver_str);
 		return (NULL);
 	}
-	_strcpy(error, datash->av[0]);
-	_strcat(error, ": ");
-	_strcat(error, ver_str);
-	_strcat(error, ": ");
-	_strcat(error, datash->args[0]);
-	_strcat(error, ": Illegal number: ");
-	_strcat(error, datash->args[1]);
-	_strcat(error, "\n\0");
+	_strcpy(err, datash->argv[0]);
+	_strcat(err, ": ");
+	_strcat(err, ver_str);
+	_strcat(err, ": ");
+	_strcat(err, datash->args[0]);
+	_strcat(err, ": Illegal number: ");
+	_strcat(err, datash->args[1]);
+	_strcat(err, "\n\0");
 	free(ver_str);
 
-	return (error);
+	return (err);
 }
-
