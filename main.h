@@ -22,22 +22,22 @@ extern char **environ;
 
 /**
  * struct data - struct that contains all relevant data on runtime
- * @av: argument vector
+ * @argv: argument vector
  * @input: command line written by the user
  * @args: tokens of the command line
  * @status: last status of the shell
  * @counter: lines counter
- * @_environ: environment variable
+ * @_env: environment variable
  * @pid: process ID of the shell
  */
 typedef struct data
 {
-	char **ac;
+	char **argv;
 	char *input;
 	char **args;
 	int status;
 	int counter;
-	char **_environ;
+	char **_env;
 	char *pid;
 } data_shell;
 
@@ -125,14 +125,14 @@ int _isdigit(const char *s);
 void rev_string(char *s);
 
 /* check_syntax_error.c */
-int repeated_char(char *input, int i);
-int error_sep_op(char *input, int i, char last);
-int first_char(char *input, int *i);
+int repeated_char(char *input, int index);
+int error_sep_op(char *input, int index, char last);
+int first_char(char *input, int *index);
 void print_syntax_error(data_shell *datash, char *input, int i, int bool);
 int check_syntax_error(data_shell *datash, char *input);
 
 /* shell_loop.c */
-char *without_comment(char *in);
+char *without_comment(char *input);
 void shell_loop(data_shell *datash);
 
 /* read_line.c */
@@ -209,11 +209,11 @@ char *error_permission(char **args);
 char *error_path_126(data_shell *datash);
 
 
-/* get_error.c */
-int get_error(data_shell *datash, int eval);
+/* get_err.c */
+int get_err(data_shell *datash, int err_val);
 
-/* get_sigint.c */
-void get_sigint(int sig);
+/* handle_sig.c */
+void get_sigint(int signal);
 
 /* aux_help.c */
 void aux_help_env(void);

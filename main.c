@@ -3,16 +3,16 @@
 * free_data - frees data structure
 *
 * @datash: data structure
-* Return: no return
+* Return: Nothing
 */
 void free_data(data_shell *datash)
 {
 	unsigned int i;
-	for (i = 0; datash->_environ[i]; i++)
+	for (i = 0; datash->_env[i]; i++)
 	{
-		free(datash->_environ[i]);
+		free(datash->_env[i]);
 	}
-	free(datash->_environ);
+	free(datash->_env);
 	free(datash->pid);
 }
 
@@ -20,7 +20,7 @@ void free_data(data_shell *datash)
 * set_data - Initialize data structure
 *
 * @datash: data structure
-* @av: argument vector
+* @argv: argument vector
 * Return: no return
 */
 void set_data(data_shell *datash, char **argv)
@@ -34,19 +34,19 @@ void set_data(data_shell *datash, char **argv)
 
 	for (i = 0; environ[i]; i++)
 		;
-	datash->_environ = malloc(sizeof(char *) * (i + 1));
+	datash->_env = malloc(sizeof(char *) * (i + 1));
 	for (i = 0; environ[i]; i++)
 	{
-		datash->_environ[i] = _strdup(environ[i]);
+		datash->_env[i] = _strdup(environ[i]);
 	}
-	datash->_environ[i] = NULL;
+	datash->_env[i] = NULL;
 	datash->pid = aux_itoa(getpid());
 }
 /**
 * main - Entry point
 *
-* @ac: argument count
-* @av: argument vector
+* @argc: argument count
+* @argv: argument vector
 *
 * Return: 0 on success.
 */
